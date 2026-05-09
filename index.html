@@ -58,160 +58,47 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8">
-        <article class="blog-post">
-          <div class="blog-post-thumb">
-            <img src="images/blog/thumbnail1.jpg" alt="blog-thum" />
-          </div>
-          <div class="blog-post-content">
-            <div class="blog-post-tag">
-              <a href="#">Movie Review</a>
-            </div>
-            <div class="blog-post-title">
-              <a href="/blogs/avengers-infinity-war-explanation">Avengers: Infinity War Movie Explanation</a>
-            </div>
-            <div class="blog-post-meta">
-              <ul>
-                <li>By Editorial Staff</a></li>
-                <li>
-                  <i class="fa fa-clock-o"></i>
-                  October 10, 2024 - 1 min
-                </li>
-              </ul>
-            </div>
-            <p>
-              The story begins on Thor's ship. Thanos has already collected..
-            </p>
-            <a href="/blogs/avengers-infinity-war-explanation" class="blog-post-action">read more <i class="fa fa-angle-right"></i></a>
-          </div>
-        </article>
-        <article class="blog-post">
-          <div class="blog-post-thumb">
-            <a href="/blogs/avengers-end-game-explanation">
-              <img src="images/blog/thumbnail2.jpg" alt="blog-thum" /></a>
-          </div>
-          <div class="blog-post-content">
-            <div class="blog-post-tag">
-              <a href="#">Movie Review</a>
-            </div>
-            <div class="blog-post-title">
-              <a href="/blogs/avengers-end-game-explanation">Avengers: End Game Movie Explanation</a>
-            </div>
-            <div class="blog-post-meta">
-              <ul>
-                <li>By Editorial Staff</a></li>
-                <li>
-                  <i class="fa fa-clock-o"></i>
-                  October 11, 2024 - 2 min
-                </li>
-              </ul>
-            </div>
+        <?xml version="1.0" encoding="UTF-8"?>
+<posts>
 
-            <p>
-              One of the most anticipated movies in the Marvel Cinematic Universe...
-            </p>
-            <a href="/blogs/avengers-end-game-explanation" class="blog-post-action">read more <i class="fa fa-angle-right"></i></a>
-          </div>
-        </article>
-        <article class="blog-post">
-          <div class="blog-post-thumb">
-            <a href="/blogs/spider-man-no-way-home">
-              <img src="images/blog/thumbnail3.jpg" alt="blog-thum" /></a>
-          </div>
-          <div class="blog-post-content">
-            <div class="blog-post-tag">
-              <a href="#">Movie Review</a>
-            </div>
-            <div class="blog-post-title">
-              <a href="/blogs/spider-man-no-way-home">Spider-Man: No Way Home Movie Explanation</a>
-            </div>
-            <div class="blog-post-meta">
-              <ul>
-                <li>By Editorial Staff</li>
-                <li>
-                  <i class="fa fa-clock-o"></i>
-                  October 18, 2024 - 2 min
-                </li>
-              </ul>
-            </div>
+<script type="text/javascript"><![CDATA[
 
-            <p>
-              Spider-Man: No Way Home is one of the most popular and emotional...
-            </p>
-            <a href="/blogs/spider-man-no-way-home" class="blog-post-action">read more <i class="fa fa-angle-right"></i></a>
-          </div>
-        </article>
-        <article class="blog-post">
-          <div class="blog-post-thumb">
-            <a href="/blogs/spider-man-far-from-home">
-              <img src="images/blog/thumbnail4.jpg" alt="blog-thum" /></a>
-          </div>
-          <div class="blog-post-content">
-            <div class="blog-post-tag">
-              <a href="#">Movie Review</a>
-            </div>
-            <div class="blog-post-title">
-              <a href="/blogs/spider-man-far-from-home">Spider-Man: Far From Home Movie Explanation</a>
-            </div>
-            <div class="blog-post-meta">
-              <ul>
-                <li>By Editorial Staff</li>
-                <li>
-                  <i class="fa fa-clock-o"></i>
-                  October 19, 2024 - 2 min
-                </li>
-              </ul>
-            </div>
+fetch("https://api.github.com/repos/shujon1410941-eng/myblogs/contents/blogs")
+  .then(response => response.json())
+  .then(data => {
 
-            <p>
-              Spider-Man: Far From Home is the sequel to Avengers: Endgame. It follows...
-            </p>
-            <a href="/blogs/spider-man-far-from-home" class="blog-post-action">read more <i class="fa fa-angle-right"></i></a>
-          </div>
-        </article>
-        <article class="blog-post">
-          <div class="blog-post-thumb">
-            <a href="/blogs/spider-man-home-coming">
-              <img src="images/blog/thumbnail5.jpg" alt="blog-thum" /></a>
-          </div>
-          <div class="blog-post-content">
-            <div class="blog-post-tag">
-              <a href="#">Movie Review</a>
-            </div>
-            <div class="blog-post-title">
-              <a href="/blogs/spider-man-home-coming">Five Things You Need to Know to Start Your Day</a>
-            </div>
-            <div class="blog-post-meta">
-              <ul>
-                <li>By Editorial Staff</li>
-                <li>
-                  <i class="fa fa-clock-o"></i>
-                  October 29, 2024 - 2 min
-                </li>
-              </ul>
-            </div>
+    const postsContainer = document.createElement("div");
 
-            <p>
-              Spider-Man: Homecoming is Spider-Man's first solo film in the Marvel...
-            </p>
-            <a href="/blogs/spider-man-home-coming" class="blog-post-action">read more <i class="fa fa-angle-right"></i></a>
-          </div>
-        </article>
+    data.forEach(file => {
+
+      if (file.name.endsWith(".html")) {
+
+        const title = file.name
+          .replace(".html", "")
+          .replace(/-/g, " ");
+
+        const post = document.createElement("p");
+
+        post.innerHTML = `
+          <a href="https://shujon1410941-eng.github.io/myblogs/blogs/${file.name}" target="_blank">
+            ${title}
+          </a>
+        `;
+
+        postsContainer.appendChild(post);
+
+      }
+
+    });
+
+    document.body.appendChild(postsContainer);
+
+  });
+
+]]></script>
+
+</posts>
         
-        <div class="blog-post-pagination">
-          <nav aria-label="Page navigation example" class="nav-bg">
-            <ul class="pagination">
-              <li class="page-item">
-                <a class="page-link active" href="#">1</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#">
-                  <i class="fa fa-angle-right"></i>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
       </div>
       <div class="col-lg-4">
         <div class="blog-post-widget">
