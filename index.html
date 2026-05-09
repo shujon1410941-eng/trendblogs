@@ -58,46 +58,51 @@
   <div class="container">
     <div class="row">
       
-        <?xml version="1.0" encoding="UTF-8"?>
-<posts>
+        <div class="col-lg-8">
 
-<script type="text/javascript"><![CDATA[
+  <div id="postsList"></div>
+
+</div>
+
+<script>
 
 fetch("https://api.github.com/repos/shujon1410941-eng/myblogs/contents/blogs")
-  .then(response => response.json())
-  .then(data => {
+.then(response => response.json())
+.then(data => {
 
-    const postsContainer = document.createElement("div");
+  const postsDiv = document.getElementById("postsList");
 
-    data.forEach(file => {
+  data.forEach(file => {
 
-      if (file.name.endsWith(".html")) {
+    if(file.name.endsWith(".html")) {
 
-        const title = file.name
-          .replace(".html", "")
-          .replace(/-/g, " ");
+      let title = file.name
+        .replace(".html", "")
+        .replace(/-/g, " ");
 
-        const post = document.createElement("p");
+      postsDiv.innerHTML += `
 
-        post.innerHTML = `
-          <a href="https://shujon1410941-eng.github.io/myblogs/blogs/${file.name}" target="_blank">
-            ${title}
-          </a>
-        `;
+        <div class="blog-post">
+          <div class="blog-post-content">
 
-        postsContainer.appendChild(post);
+            <h3>
+              <a href="/blogs/${file.name}" target="_blank">
+                ${title}
+              </a>
+            </h3>
 
-      }
+          </div>
+        </div>
 
-    });
+      `;
 
-    document.body.appendChild(postsContainer);
+    }
 
   });
 
-]]></script>
+});
 
-</posts>
+</script>
         
   
       <div class="col-lg-4">
