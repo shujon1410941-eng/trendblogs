@@ -79,8 +79,7 @@ async function loadPosts(){
 
   let data = await response.json();
 
-  // newest first
-  data.reverse();
+  data.reverse(); 
 
   const postsDiv = document.getElementById("postsList");
 
@@ -89,29 +88,28 @@ async function loadPosts(){
     if(file.name.endsWith(".html")){
 
       const fileResponse = await fetch(file.download_url);
-      const html = await fileResponse.text();
+      const htmlText = await fileResponse.text();
 
-      // get first p tag content
-      const pMatch = html.match(/<p[^>]*>(.*?)<\/p>/i);
+
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(htmlText, "text/html");
+
+
+      const pTag = doc.querySelector(".blog-single .single-blog p");
 
       let excerpt = "No excerpt available.";
 
-      if(pMatch && pMatch[1]){
+      if(pTag){
 
-        excerpt = pMatch[1]
-          .replace(/<[^>]*>/g, "")
+        excerpt = pTag.textContent
           .replace(/\s+/g, " ")
-          .trim();
-
-        // 40 words limit
-        excerpt = excerpt
+          .trim()
           .split(" ")
-          .slice(0,40)
+          .slice(0, 40)
           .join(" ") + "...";
 
       }
 
-      // title
       let title = file.name
         .replace(".html","")
         .replace(/-/g," ");
