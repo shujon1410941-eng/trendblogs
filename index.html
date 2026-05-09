@@ -91,14 +91,25 @@ async function loadPosts(){
       const fileResponse = await fetch(file.download_url);
       const html = await fileResponse.text();
 
-      // remove html tags
-      let text = html.replace(/<[^>]*>/g, " ");
+      // get first p tag content
+      const pMatch = html.match(/<p[^>]*>(.*?)<\/p>/i);
 
-      // clean spaces
-      text = text.replace(/\s+/g, " ").trim();
+      let excerpt = "No excerpt available.";
 
-      // 40 words excerpt
-      let excerpt = text.split(" ").slice(0,40).join(" ") + "...";
+      if(pMatch && pMatch[1]){
+
+        excerpt = pMatch[1]
+          .replace(/<[^>]*>/g, "")
+          .replace(/\s+/g, " ")
+          .trim();
+
+        // 40 words limit
+        excerpt = excerpt
+          .split(" ")
+          .slice(0,40)
+          .join(" ") + "...";
+
+      }
 
       // title
       let title = file.name
@@ -134,7 +145,6 @@ async function loadPosts(){
 loadPosts();
 
 </script>
-        
   
       <div class="col-lg-4">
         <div class="blog-post-widget">
